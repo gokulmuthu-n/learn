@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/lux/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <nav class="mb-3">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Home</a>
+        {% if username %}<span class="ms-3">Logged in as <strong>{{ username }}</strong></span>{% endif %}
+    </nav>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-primary mb-4">Login</h2>
+                    {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required autofocus>
+                        </div>
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

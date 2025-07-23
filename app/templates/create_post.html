@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/lux/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <nav class="mb-3">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Home</a>
+        <span class="ms-3">Logged in as <strong>{{ username }}</strong></span>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger ms-3">Logout</a>
+    </nav>
+    <h2 class="text-success">Create a New Post</h2>
+    {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+    <form method="post">
+        <!-- Username is shown at the top, not needed here -->
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

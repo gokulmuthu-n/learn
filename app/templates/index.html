@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Social Media</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/lux/bootstrap.min.css">
+    <style>
+        body { background: #f8f9fa; }
+        .post-card { margin-bottom: 2rem; }
+        .username { color: #007bff; font-weight: bold; }
+        .content { font-size: 1.2rem; }
+    </style>
+    <script>
+      function formatLocalTime() {
+        document.querySelectorAll('.localtime').forEach(function(el) {
+          var utc = el.getAttribute('data-utc');
+          if (utc) {
+            var date = new Date(utc + 'Z');
+            el.textContent = date.toLocaleString();
+          }
+        });
+      }
+      window.addEventListener('DOMContentLoaded', formatLocalTime);
+    </script>
+</head>
+<body>
+<div class="container mt-4">
+    <nav class="mb-3">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Home</a>
+        <span class="ms-3">Logged in as <strong>{{ username }}</strong></span>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger ms-3">Logout</a>
+    </nav>
+    <h1 class="mb-4 text-primary">Recent Posts</h1>
+    <a href="{{ url_for('create_post') }}" class="btn btn-success mb-3">Create New Post</a>
+    {% for post in posts %}
+    <div class="card post-card">
+        <div class="card-body">
+            <h5 class="card-title username">{{ post.username }}</h5>
+            <p class="card-text content">{{ post.content }}</p>
+            <small class="text-muted">Last updated: <span class="localtime" data-utc="{{ (post.last_updated or post.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span></small>
+            <br>
+            <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-info mt-2">View Details</a>
+            <span class="badge bg-secondary">{{ post.comments|length }} Comments</span>
+            <span class="badge bg-warning">{{ post.likes|length }} Likes</span>
+        </div>
+    </div>
+    {% else %}
+    <p>No posts yet. Be the first to <a href="{{ url_for('create_post') }}">create one</a>!</p>
+    {% endfor %}
+</div>
+</body>
+</html>
