@@ -1,6 +1,7 @@
 This is a space to learn stuff
 
-* Folder app was generated as a flask application using GitHub Copilot
+* product-requirements.md is a copy of the file from [here](https://github.com/microsoft/github-copilot-vibe-coding-workshop/blob/main/product-requirements.md) It has requirements for a social media app that can be used to test automatic code generation, etc.
+* Folder app was generated as a flask application of the social media app using GitHub Copilot
     - To start it, cd app; source venv/bin/activate; python app.py
     - These were the prompts used to generate the app
     - First iteration:
