@@ -18,63 +18,75 @@
     </script>
 </head>
 <body>
-<div class="container mt-4">
-    <nav class="mb-3">
-        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">Home</a>
-        <span class="ms-3">Logged in as <strong>{{ username }}</strong></span>
-        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger ms-3">Logout</a>
+<div class="container mt-2">
+    <nav class="mb-2 d-flex align-items-center" style="gap: 0.5rem;">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm">Home</a>
+        <span class="ms-2 small">Logged in as <strong>{{ username }}</strong></span>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm ms-2">Logout</a>
     </nav>
-    <h2 class="text-primary">Post by <span class="username">{{ post.username }}</span></h2>
-    <div class="card mb-3">
-        <div class="card-body">
-            <p class="card-text">{{ post.content }}</p>
-            <small class="text-muted">Last updated: <span class="localtime" data-utc="{{ (post.last_updated or post.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span></small>
-            <br>
-            <span class="badge bg-warning">{{ post.likes|length }} Likes</span>
-            <span class="badge bg-secondary">{{ post.comments|length }} Comments</span>
+    <div class="card mb-2">
+        <div class="row g-0">
+            <div class="col-2 d-flex flex-column align-items-center justify-content-start pt-2">
+                <span class="username small text-primary">{{ post.username }}</span>
+            </div>
+            <div class="col-10">
+                <div class="card-body py-2 px-3">
+                    <p class="card-text mb-1 small">{{ post.content }}</p>
+                    <small class="text-muted d-block">Last updated:</small>
+                    <span class="localtime text-muted small d-block" data-utc="{{ (post.last_updated or post.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span>
+                    <span class="badge bg-warning text-dark me-1">{{ post.likes|length }} Likes</span>
+                    <span class="badge bg-secondary">{{ post.comments|length }} Comments</span>
+                </div>
+            </div>
         </div>
     </div>
     <form method="post" action="{{ url_for('like_post', post_id=post.id) }}" class="d-inline">
-        <button type="submit" class="btn btn-warning">Like</button>
+        <button type="submit" class="btn btn-warning btn-sm">Like</button>
     </form>
     <form method="post" action="{{ url_for('unlike_post', post_id=post.id) }}" class="d-inline">
-        <button type="submit" class="btn btn-outline-warning">Unlike</button>
+        <button type="submit" class="btn btn-outline-warning btn-sm">Unlike</button>
     </form>
     {% if username == post.username %}
-        <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info">Edit</a>
+        <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-info btn-sm">Edit</a>
         <form method="post" action="{{ url_for('delete_post', post_id=post.id) }}" class="d-inline">
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
         </form>
     {% endif %}
-    <hr>
-    <h4>Comments</h4>
+    <hr class="my-2">
+    <h6 class="mb-2">Comments</h6>
     {% for comment in comments %}
-    <div class="card mb-2">
-        <div class="card-body">
-            <span class="username">{{ comment.username }}</span>: {{ comment.content }}
-            <small class="text-muted">Last updated: <span class="localtime" data-utc="{{ (comment.last_updated or comment.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span></small>
-            <br>
-            {% if username == comment.username %}
-                <a href="{{ url_for('edit_comment', comment_id=comment.id) }}" class="btn btn-sm btn-outline-info">Edit</a>
-                <form method="post" action="{{ url_for('delete_comment', comment_id=comment.id) }}" class="d-inline">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
-            {% endif %}
+    <div class="card mb-1">
+        <div class="row g-0">
+            <div class="col-2 d-flex flex-column align-items-center justify-content-start pt-2">
+                <span class="username small text-primary">{{ comment.username }}</span>
+            </div>
+            <div class="col-10">
+                <div class="card-body py-2 px-3">
+                    <span class="small">{{ comment.content }}</span>
+                    <small class="text-muted d-block">Last updated:</small>
+                    <span class="localtime text-muted small d-block" data-utc="{{ (comment.last_updated or comment.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span>
+                    {% if username == comment.username %}
+                        <a href="{{ url_for('edit_comment', comment_id=comment.id) }}" class="btn btn-sm btn-outline-info btn-xs">Edit</a>
+                        <form method="post" action="{{ url_for('delete_comment', comment_id=comment.id) }}" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger btn-xs">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
     {% else %}
-    <p>No comments yet.</p>
+    <p class="small">No comments yet.</p>
     {% endfor %}
-    <hr>
-    <h5>Add a Comment</h5>
+    <hr class="my-2">
+    <h6>Add a Comment</h6>
     <form method="post" action="{{ url_for('add_comment', post_id=post.id) }}">
-        <!-- Username is shown at the top, not needed here -->
-        <div class="mb-3">
-            <textarea class="form-control" name="content" rows="2" placeholder="Your comment" required></textarea>
+        <div class="mb-2">
+            <textarea class="form-control form-control-sm" name="content" rows="1" placeholder="Your comment" required></textarea>
         </div>
-        <button type="submit" class="btn btn-success">Comment</button>
+        <button type="submit" class="btn btn-success btn-sm">Comment</button>
     </form>
-    <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Back to Posts</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm mt-2">Back to Posts</a>
 </div>
 </body>
 </html>
