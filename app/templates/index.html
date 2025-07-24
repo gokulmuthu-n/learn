@@ -33,21 +33,21 @@
     <h5 class="mb-2 text-primary">Recent Posts</h5>
     <a href="{{ url_for('create_post') }}" class="btn btn-success btn-sm mb-2">Create New Post</a>
     {% for post in posts %}
-    <div class="card mb-2">
-        <div class="row g-0 align-items-center">
+    <div class="card mb-4 shadow-sm" style="border-radius: 12px;">
+        <div class="row g-0 align-items-center" style="padding: 12px 0;">
             <div class="col-2 d-flex flex-column align-items-center justify-content-start pt-2">
                 <span class="username small text-primary">{{ post.username }}</span>
             </div>
             <div class="col-8">
-                <div class="card-body py-2 px-3">
-                    <p class="card-text mb-1 small">{{ post.content }}</p>
-                    <small class="text-muted d-block">Last updated:</small>
-                    <span class="localtime text-muted small d-block" data-utc="{{ (post.last_updated or post.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span>
+                <div class="card-body py-3 px-4">
+                    <p class="card-text mb-2 small">{{ post.content }}</p>
+                    <small class="text-muted d-block mb-1">Last updated:</small>
+                    <span class="localtime text-muted small d-block mb-1" data-utc="{{ (post.last_updated or post.created_at).strftime('%Y-%m-%dT%H:%M:%S') }}"></span>
                 </div>
             </div>
-            <div class="col-2 d-flex flex-column align-items-end justify-content-center pe-2">
-                <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-info btn-sm mb-1">View Details</a>
-                <span class="badge bg-secondary mb-1">{{ post.comments|length }} Comments</span>
+            <div class="col-2 d-flex flex-column align-items-end justify-content-center pe-3">
+                <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-info btn-sm mb-2">View Details</a>
+                <span class="badge bg-secondary mb-2">{{ post.comments|length }} Comments</span>
                 <span class="badge bg-warning text-dark">{{ post.likes|length }} Likes</span>
             </div>
         </div>
